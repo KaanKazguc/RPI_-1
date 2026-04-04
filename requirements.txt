@@ -2,4 +2,7 @@ pip
 pytest
 python-dotenv
 ruff
+opencv-python
+matplotlib
+numpy
 -e .
