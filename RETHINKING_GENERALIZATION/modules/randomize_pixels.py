@@ -96,7 +96,7 @@ def process_dataset(src_dir, dest_dir, percent, ext="*.png"):
             print(f"  Progress: {i + 1}/{len(files)}...")
 
 def main():
-    base_dir = Path(__file__).parent.parent
+    base_dir = Path(__file__).resolve().parent.parent.parent
     raw_dir = base_dir / "data" / "raw"
     processed_dir = base_dir / "data" / "processed"
     

@@ -47,8 +47,9 @@ def main():
     url = "https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz"
     
     # The user is running this in the project root hopefully, or in data
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    raw_dir = os.path.join(base_dir, "raw")
+    # Getting root path (3 levels up from modules/)
+    root_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    raw_dir = os.path.join(root_dir, "data", "raw")
     os.makedirs(raw_dir, exist_ok=True)
     
     archive_path = os.path.join(raw_dir, "cifar-10-python.tar.gz")

@@ -34,7 +34,7 @@ def randomize_labels(input_csv, output_csv, seed=42):
     print(f"Processed {len(data)} rows.")
 
 def main():
-    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     
     cifar_in = os.path.join(base_dir, "data", "raw", "cifar10_labels.csv")
     cifar_out = os.path.join(base_dir, "data", "processed", "cifar10_labels_randomized.csv")

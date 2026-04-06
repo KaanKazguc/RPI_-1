@@ -23,8 +23,9 @@ def download_mnist(raw_dir):
     return files
 
 def main():
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    raw_dir = os.path.join(base_dir, "raw")
+    # Getting root path (3 levels up from modules/)
+    root_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    raw_dir = os.path.join(root_dir, "data", "raw")
     os.makedirs(raw_dir, exist_ok=True)
     
     # Ensure dataset is downloaded
