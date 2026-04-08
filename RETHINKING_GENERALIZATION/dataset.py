@@ -4,6 +4,7 @@ from .modules.extract_cifar import main as extract_cifar
 from .modules.extract_mnist import main as extract_mnist
 from .modules.randomize_labels import main as randomize_labels
 from .modules.randomize_pixels import main as randomize_pixels
+from .modules.pixel_shuffle import main as pixel_shuffle
 
 class GeneralizationProject:
     """
@@ -26,17 +27,20 @@ class GeneralizationProject:
         """Runs all extraction and randomization modules in the correct order."""
         print("--- Starting Data Preparation Pipeline ---")
         
-        print("\n[1/4] Extracting CIFAR-10...")
+        print("\n[1/5] Extracting CIFAR-10...")
         extract_cifar()
         
-        print("\n[2/4] Extracting MNIST...")
+        print("\n[2/5] Extracting MNIST...")
         extract_mnist()
         
-        print("\n[3/4] Randomizing Labels...")
+        print("\n[3/5] Randomizing Labels...")
         randomize_labels()
         
-        print("\n[4/4] Randomizing Pixels...")
+        print("\n[4/5] Randomizing Pixels...")
         randomize_pixels()
+        
+        print("\n[5/5] Shuffling Pixels (Same Way for all)...")
+        pixel_shuffle()
         
         print("\n--- All Preparation Tasks Completed Successfully! ---")
 

@@ -44,36 +44,30 @@ def process_dataset(src_dir, dest_dir, percent, ext="*.png"):
         print(f"No files found in {src_dir} with extension {ext}")
         return
         
-    print(f"Processing {len(files)} images for {dest_path.name} ({percent}% shuffle)...")
+    print(f"Processing {len(files)} images for {dest_path.name} ({percent}% INDEPENDENT random shuffle)...")
     
-    # We use a fixed seed for reproducibility, but also so that 
-    # if the user wants "same shuffle for all", we can decide.
-    # The paper says "fixed random permutation for all images".
-    # I will generate one permutation per dataset per percent level.
-    
-    # Actually, if I use the function above inside the loop, 
-    # it's better to pre-calculate the permutation for the 100% case if we want it fixed.
-    
-    # Let's read one image to get dimensions
-    first_img = np.array(Image.open(files[0]))
-    h, w = first_img.shape[:2]
-    num_pixels = h * w
-    
+    # Set a global seed for reproducibility, but don't reset it inside 
+    # the loop so each image gets a different permutation.
     np.random.seed(42)
-    if percent >= 100:
-        perm = np.random.permutation(num_pixels)
-    else:
-        # For partial, we also pick fixed indices to swap for all images
-        num_to_swap = int(num_pixels * (percent / 100.0))
-        indices = np.random.choice(num_pixels, num_to_swap, replace=False)
-        shuffled_indices = np.random.permutation(indices)
     
     for i, f in enumerate(files):
         img = Image.open(f)
         arr = np.array(img)
-        
-        # Apply fixed permutation
         shape = arr.shape
+        num_pixels = shape[0] * shape[1]
+        
+        # WE MOVE THE PERMUTATION LOGIC HERE (INSIDE THE LOOP)
+        # This makes it "True Random Pixels" (varying per image)
+        if percent >= 100:
+            # Full shuffle - DIFFERENT PERMUTATION FOR EACH IMAGE
+            perm = np.random.permutation(num_pixels)
+        else:
+            # Partial shuffle - DIFFERENT INDICES FOR EACH IMAGE
+            num_to_swap = int(num_pixels * (percent / 100.0))
+            indices = np.random.choice(num_pixels, num_to_swap, replace=False)
+            shuffled_indices = np.random.permutation(indices)
+
+        # Apply permutation logic
         if len(shape) == 3:
             flat = arr.reshape(-1, shape[2])
             new_flat = flat.copy()
