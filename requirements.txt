@@ -5,4 +5,6 @@ ruff
 opencv-python
 matplotlib
 numpy
+torch
+torchvision
 -e .
