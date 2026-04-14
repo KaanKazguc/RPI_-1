@@ -7,4 +7,6 @@ matplotlib
 numpy
 torch
 torchvision
+plotly
+streamlit
 -e .
